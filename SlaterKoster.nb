@@ -1,0 +1,1243 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     51845,       1235]
+NotebookOptionsPosition[     51556,       1220]
+NotebookOutlinePosition[     51943,       1237]
+CellTagsIndexPosition[     51900,       1234]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Clear", "[", "\"\<SKpara\>\"", "]"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", 
+    "\[Equal]"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Author", ":", " ", 
+    RowBox[{"Jiayu", " ", 
+     RowBox[{"Li", "@", "SUSTech"}]}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Email", ":", " ", 
+    RowBox[{
+     RowBox[{"lijy7", "@", "mail"}], ".", "sustech", ".", "edu", ".", 
+     "cn"}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"Website", ":", " ", 
+     RowBox[{"Qihang", " ", 
+      RowBox[{"Liu", "'"}], "s", " ", "group"}]}], ",", " ", 
+    RowBox[{
+     RowBox[{"https", ":"}], "//", 
+     RowBox[{
+      RowBox[{"liuqh", ".", "phy", ".", "sustech", ".", "edu", ".", "cn"}], 
+      "/"}]}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", 
+    "\[Equal]"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"SKpara", "[", 
+      RowBox[{"A", ",", "B", ",", "vec"}], "]"}], " ", "is", " ", "a", " ", 
+     "function", " ", "to", " ", "generate", " ", "the", " ", "Slater"}], "-", 
+    RowBox[{"Koster", " ", 
+     RowBox[{"(", "SK", ")"}], " ", "parameter", " ", "describing", " ", 
+     "the", " ", "hopping", " ", "integral", " ", "from", " ", "atomic", " ", 
+     "orbital", " ", "B", " ", "to", " ", "orbital", " ", "A", " ", 
+     "connected", " ", "by", " ", "vecter", " ", 
+     RowBox[{"vec", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", "Input", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"A", ",", 
+    RowBox[{"B", ":", " ", 
+     RowBox[{"atomic", " ", "orbital", " ", "type"}]}], ",", " ", 
+    RowBox[{"such", " ", "as", " ", "\"\<s\>\""}], ",", "\"\<p_x\>\"", ",", 
+    "\"\<\!\(\*SuperscriptBox[\(d_x\), \(2\)]\)-\!\(\*SuperscriptBox[\(y\), \
+\(2\)]\)\>\"", ",", "etc"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"vec", ":", " ", 
+    RowBox[{"three", "-", 
+     RowBox[{"dimensional", " ", "vector"}]}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", "Output", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+    "Symbolic", " ", "variable", " ", "with", " ", "standard", " ", "SK", " ",
+      "parameters", " ", "Vss\[Sigma]"}], ",", "Vpp\[Pi]", ",", "etc"}], " ", 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"Reference", ":", " ", "https", ":"}], "//", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"en", ".", "wikipedia", ".", "org"}], "/", "wiki"}], "/", 
+     "Tight_binding"}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Last", " ", 
+    RowBox[{"update", ":", " ", "20210310"}]}], "*)"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SKpara", "::", "orb"}], "=", 
+   "\"\<Invaid input(s) with `1`, `2`, and/or `3`! \\ Function \
+SKpara[typeA,typeB,vec] accepts typeA/B as one of the strings \
+{s,p_x,p_y,p_z,d_yz,d_zx,d_yz,d_xy,\!\(\*SuperscriptBox[\(d_x\), \
+\(2\)]\)-\!\(\*SuperscriptBox[\(y\), \(2\)]\),d_3\!\(\*SuperscriptBox[\(z\), \
+\(2\)]\)-\!\(\*SuperscriptBox[\(r\), \(2\)]\)} and vec as a three-dimensional \
+vector {l,m,n}.\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SKpara", "[", 
+   RowBox[{"typeA_", ",", "typeB_", ",", "vec_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"proj", "=", 
+       RowBox[{"ConstantArray", "[", 
+        RowBox[{"0", ",", "3"}], "]"}]}], ",", 
+      RowBox[{"plist", "=", 
+       RowBox[{"{", 
+        RowBox[{"\"\<p_x\>\"", ",", "\"\<p_y\>\"", ",", "\"\<p_z\>\""}], 
+        "}"}]}], ",", 
+      RowBox[{"dlist", "=", 
+       RowBox[{"{", 
+        RowBox[{
+        "\"\<d_yz\>\"", ",", "\"\<d_zx\>\"", ",", "\"\<d_xy\>\"", ",", 
+         "\"\<\!\(\*SuperscriptBox[\(d_x\), \(2\)]\)-\!\(\*SuperscriptBox[\(y\
+\), \(2\)]\)\>\"", ",", 
+         "\"\<d_3\!\(\*SuperscriptBox[\(z\), \
+\(2\)]\)-\!\(\*SuperscriptBox[\(r\), \(2\)]\)\>\""}], "}"}]}], ",", "pos", 
+      ",", "dlab", ",", "double", ",", "para"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"!", 
+         RowBox[{"MemberQ", "[", 
+          RowBox[{
+           RowBox[{"Flatten", "[", 
+            RowBox[{"{", 
+             RowBox[{"\"\<s\>\"", ",", "plist", ",", "dlist"}], "}"}], "]"}], 
+           ",", "typeA"}], "]"}]}], "||", 
+        RowBox[{"!", 
+         RowBox[{"MemberQ", "[", 
+          RowBox[{
+           RowBox[{"Flatten", "[", 
+            RowBox[{"{", 
+             RowBox[{"\"\<s\>\"", ",", "plist", ",", "dlist"}], "}"}], "]"}], 
+           ",", "typeB"}], "]"}]}], "||", 
+        RowBox[{"!", 
+         RowBox[{"VectorQ", "[", "vec", "]"}]}]}], ",", 
+       RowBox[{
+        RowBox[{"Message", "[", 
+         RowBox[{
+          RowBox[{"SKpara", "::", "orb"}], ",", "typeA", ",", "typeB", ",", 
+          "vec"}], "]"}], ";", 
+        RowBox[{"Abort", "[", "]"}]}]}], "]"}], ";", 
+     RowBox[{"proj", "=", 
+      RowBox[{"vec", "/", 
+       RowBox[{"Norm", "[", "vec", "]"}]}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"pos", "[", 
+       RowBox[{"lis_", ",", "ele_"}], "]"}], ":=", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"Flatten", "@", 
+         RowBox[{"Position", "[", 
+          RowBox[{"lis", ",", "ele"}], "]"}]}], ")"}], "[", 
+       RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"comp", "[", 
+       RowBox[{"lis_", ",", "ele_"}], "]"}], ":=", 
+      RowBox[{"proj", "[", 
+       RowBox[{"[", 
+        RowBox[{"pos", "[", 
+         RowBox[{"lis", ",", "ele"}], "]"}], "]"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"dlab", "[", "j", "]"}], "=", 
+        RowBox[{
+         RowBox[{"RotateLeft", "[", 
+          RowBox[{
+           RowBox[{"Range", "[", "3", "]"}], ",", 
+           RowBox[{"pos", "[", 
+            RowBox[{"dlist", ",", "j"}], "]"}]}], "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{";;", "2"}], "]"}], "]"}]}], ",", 
+       RowBox[{"{", 
+        RowBox[{"j", ",", 
+         RowBox[{"dlist", "[", 
+          RowBox[{"[", 
+           RowBox[{";;", "3"}], "]"}], "]"}]}], "}"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"typeA", "\[Equal]", "\"\<s\>\""}], "&&", 
+        RowBox[{"typeB", "\[Equal]", "\"\<s\>\""}]}], ",", 
+       RowBox[{"para", "=", "Vss\[Sigma]"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"typeA", "\[Equal]", "\"\<s\>\""}], "&&", 
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"plist", ",", "typeB"}], "]"}]}], ",", 
+       RowBox[{"para", "=", 
+        RowBox[{"Vsp\[Sigma]", "*", 
+         RowBox[{"comp", "[", 
+          RowBox[{"plist", ",", "typeB"}], "]"}]}]}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"typeB", "\[Equal]", "\"\<s\>\""}], "&&", 
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"plist", ",", "typeA"}], "]"}]}], ",", 
+       RowBox[{"para", "=", 
+        RowBox[{
+         RowBox[{"-", "Vsp\[Sigma]"}], "*", 
+         RowBox[{"comp", "[", 
+          RowBox[{"plist", ",", "typeA"}], "]"}]}]}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"typeA", "\[Equal]", "\"\<s\>\""}], "&&", 
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"dlist", ",", "typeB"}], "]"}]}], ",", 
+       RowBox[{"para", "=", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"MemberQ", "[", 
+           RowBox[{
+            RowBox[{"dlist", "[", 
+             RowBox[{"[", 
+              RowBox[{";;", "3"}], "]"}], "]"}], ",", "typeB"}], "]"}], ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              SqrtBox["3"], "Vsd\[Sigma]", "*", 
+              RowBox[{"proj", "[", 
+               RowBox[{"[", "#1", "]"}], "]"}], "*", 
+              RowBox[{"proj", "[", 
+               RowBox[{"[", "#2", "]"}], "]"}]}], ")"}], "&"}], "@@", 
+           RowBox[{"RotateLeft", "[", 
+            RowBox[{
+             RowBox[{"Range", "[", "3", "]"}], ",", 
+             RowBox[{"pos", "[", 
+              RowBox[{"dlist", ",", "typeB"}], "]"}]}], "]"}]}], ",", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+            "typeB", "==", 
+             "\"\<\!\(\*SuperscriptBox[\(d_x\), \
+\(2\)]\)-\!\(\*SuperscriptBox[\(y\), \(2\)]\)\>\""}], ",", 
+            RowBox[{
+             FractionBox[
+              SqrtBox["3"], "2"], "Vsd\[Sigma]", 
+             RowBox[{"(", 
+              RowBox[{
+               SuperscriptBox[
+                RowBox[{"proj", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "2"], "-", 
+               SuperscriptBox[
+                RowBox[{"proj", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}]}], ",", 
+            RowBox[{"Vsds", 
+             RowBox[{"(", 
+              RowBox[{
+               SuperscriptBox[
+                RowBox[{"proj", "[", 
+                 RowBox[{"[", "3", "]"}], "]"}], "2"], "-", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "+", 
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}], "/", 
+                "2"}]}], ")"}]}]}], "]"}]}], "]"}]}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"typeB", "\[Equal]", "\"\<s\>\""}], "&&", 
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"dlist", ",", "typeA"}], "]"}]}], ",", 
+       RowBox[{"para", "=", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"MemberQ", "[", 
+           RowBox[{
+            RowBox[{"dlist", "[", 
+             RowBox[{"[", 
+              RowBox[{";;", "3"}], "]"}], "]"}], ",", "typeA"}], "]"}], ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              SqrtBox["3"], "Vsd\[Sigma]", "*", 
+              RowBox[{"proj", "[", 
+               RowBox[{"[", "#1", "]"}], "]"}], "*", 
+              RowBox[{"proj", "[", 
+               RowBox[{"[", "#2", "]"}], "]"}]}], ")"}], "&"}], "@@", 
+           RowBox[{"RotateLeft", "[", 
+            RowBox[{
+             RowBox[{"Range", "[", "3", "]"}], ",", 
+             RowBox[{"pos", "[", 
+              RowBox[{"dlist", ",", "typeA"}], "]"}]}], "]"}]}], ",", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+            "typeA", "==", 
+             "\"\<\!\(\*SuperscriptBox[\(d_x\), \
+\(2\)]\)-\!\(\*SuperscriptBox[\(y\), \(2\)]\)\>\""}], ",", 
+            RowBox[{
+             FractionBox[
+              SqrtBox["3"], "2"], "Vsd\[Sigma]", 
+             RowBox[{"(", 
+              RowBox[{
+               SuperscriptBox[
+                RowBox[{"proj", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "2"], "-", 
+               SuperscriptBox[
+                RowBox[{"proj", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}]}], ",", 
+            RowBox[{"Vsds", 
+             RowBox[{"(", 
+              RowBox[{
+               SuperscriptBox[
+                RowBox[{"proj", "[", 
+                 RowBox[{"[", "3", "]"}], "]"}], "2"], "-", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "+", 
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}], "/", 
+                "2"}]}], ")"}]}]}], "]"}]}], "]"}]}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"plist", ",", "typeA"}], "]"}], "&&", 
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"plist", ",", "typeB"}], "]"}]}], ",", 
+       RowBox[{"para", "=", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"typeA", "\[Equal]", "typeB"}], ",", 
+          RowBox[{
+           RowBox[{"Vpp\[Sigma]", "*", 
+            SuperscriptBox[
+             RowBox[{"comp", "[", 
+              RowBox[{"plist", ",", "typeA"}], "]"}], "2"]}], "+", 
+           RowBox[{"Vpp\[Pi]", "*", 
+            RowBox[{"(", 
+             RowBox[{"1", "-", 
+              SuperscriptBox[
+               RowBox[{"comp", "[", 
+                RowBox[{"plist", ",", "typeA"}], "]"}], "2"]}], ")"}]}]}], 
+          ",", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"Vpp\[Sigma]", "-", "Vpp\[Pi]"}], ")"}], "*", 
+           RowBox[{"comp", "[", 
+            RowBox[{"plist", ",", "typeA"}], "]"}], "*", 
+           RowBox[{"comp", "[", 
+            RowBox[{"plist", ",", "typeB"}], "]"}]}]}], "]"}]}]}], "]"}], ";",
+      "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"plist", ",", "typeA"}], "]"}], "&&", 
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"dlist", ",", "typeB"}], "]"}]}], ",", 
+       RowBox[{"para", "=", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"pos", "[", 
+            RowBox[{"plist", ",", "typeA"}], "]"}], "\[Equal]", 
+           RowBox[{"pos", "[", 
+            RowBox[{"dlist", ",", "typeB"}], "]"}]}], ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{
+                SqrtBox["3"], "Vpd\[Sigma]"}], "-", 
+               RowBox[{"2", "Vpd\[Pi]"}]}], ")"}], "*", 
+             RowBox[{"comp", "[", 
+              RowBox[{"plist", ",", "typeA"}], "]"}], "*", 
+             RowBox[{"proj", "[", 
+              RowBox[{"[", "#1", "]"}], "]"}], "*", 
+             RowBox[{"proj", "[", 
+              RowBox[{"[", "#2", "]"}], "]"}]}], "&"}], "@@", 
+           RowBox[{"RotateLeft", "[", 
+            RowBox[{
+             RowBox[{"Range", "[", "3", "]"}], ",", 
+             RowBox[{"pos", "[", 
+              RowBox[{"dlist", ",", "typeB"}], "]"}]}], "]"}]}], ",", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"MemberQ", "[", 
+             RowBox[{
+              RowBox[{"dlist", "[", 
+               RowBox[{"[", 
+                RowBox[{";;", "3"}], "]"}], "]"}], ",", "typeB"}], "]"}], ",", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 SqrtBox["3"], "Vpd\[Sigma]", "*", 
+                 SuperscriptBox[
+                  RowBox[{"comp", "[", 
+                   RowBox[{"plist", ",", "typeA"}], "]"}], "2"], "*", 
+                 RowBox[{"proj", "[", 
+                  RowBox[{"[", "#", "]"}], "]"}]}], "+", 
+                RowBox[{"Vpd\[Pi]", "*", 
+                 RowBox[{"proj", "[", 
+                  RowBox[{"[", "#", "]"}], "]"}], "*", 
+                 RowBox[{"(", 
+                  RowBox[{"1", "-", 
+                   RowBox[{"2", 
+                    SuperscriptBox[
+                    RowBox[{"comp", "[", 
+                    RowBox[{"plist", ",", "typeA"}], "]"}], "2"]}]}], 
+                  ")"}]}]}], ")"}], "&"}], "@", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"RotateRight", "[", 
+                   RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"#", ",", 
+                    RowBox[{
+                    RowBox[{"RotateLeft", "[", 
+                    RowBox[{
+                    RowBox[{"Range", "[", "3", "]"}], ",", 
+                    RowBox[{"#", "-", "1"}]}], "]"}], "[", 
+                    RowBox[{"[", "3", "]"}], "]"}], ",", 
+                    RowBox[{
+                    RowBox[{"RotateLeft", "[", 
+                    RowBox[{
+                    RowBox[{"Range", "[", "3", "]"}], ",", 
+                    RowBox[{"#", "-", "1"}]}], "]"}], "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], "}"}], ",", 
+                    RowBox[{"#", "-", "1"}]}], "]"}], "&"}], "@", 
+                 RowBox[{"pos", "[", 
+                  RowBox[{"plist", ",", "typeA"}], "]"}]}], ")"}], "[", 
+               RowBox[{"[", 
+                RowBox[{"pos", "[", 
+                 RowBox[{"dlist", ",", "typeB"}], "]"}], "]"}], "]"}], 
+              ")"}]}], ",", 
+            RowBox[{"Switch", "[", 
+             RowBox[{
+             "typeB", ",", 
+              "\"\<\!\(\*SuperscriptBox[\(d_x\), \
+\(2\)]\)-\!\(\*SuperscriptBox[\(y\), \(2\)]\)\>\"", ",", 
+              RowBox[{
+               RowBox[{
+                FractionBox[
+                 SqrtBox["3"], "2"], "Vpd\[Sigma]", "*", 
+                RowBox[{"comp", "[", 
+                 RowBox[{"plist", ",", "typeA"}], "]"}], "*", 
+                RowBox[{"(", 
+                 RowBox[{
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "-", 
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}]}], "-", 
+               RowBox[{"Vpd\[Pi]", "*", 
+                RowBox[{"comp", "[", 
+                 RowBox[{"plist", ",", "typeA"}], "]"}], 
+                RowBox[{"(", 
+                 RowBox[{
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "-", 
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}]}], "+", 
+               RowBox[{"Vpd\[Pi]", "*", 
+                RowBox[{"Switch", "[", 
+                 RowBox[{"typeA", ",", "\"\<p_x\>\"", ",", 
+                  RowBox[{"proj", "[", 
+                   RowBox[{"[", "1", "]"}], "]"}], ",", "\"\<p_y\>\"", ",", 
+                  RowBox[{"-", 
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], ",", "\"\<p_z\>\"", ",",
+                   "0"}], "]"}]}]}], ",", 
+              "\"\<d_3\!\(\*SuperscriptBox[\(z\), \
+\(2\)]\)-\!\(\*SuperscriptBox[\(r\), \(2\)]\)\>\"", ",", 
+              RowBox[{
+               RowBox[{"Vpd\[Sigma]", "*", 
+                RowBox[{"comp", "[", 
+                 RowBox[{"plist", ",", "typeA"}], "]"}], 
+                RowBox[{"(", 
+                 RowBox[{
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "3", "]"}], "]"}], "2"], "-", 
+                  RowBox[{
+                   RowBox[{"(", 
+                    RowBox[{
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "+", 
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}], "/", 
+                   "2"}]}], ")"}]}], "-", 
+               RowBox[{
+                SqrtBox["3"], "Vpd\[Pi]", "*", 
+                RowBox[{"comp", "[", 
+                 RowBox[{"plist", ",", "typeA"}], "]"}], "*", 
+                SuperscriptBox[
+                 RowBox[{"proj", "[", 
+                  RowBox[{"[", "3", "]"}], "]"}], "2"]}], "+", 
+               RowBox[{
+                SqrtBox["3"], "Vpd\[Pi]", "*", 
+                RowBox[{"If", "[", 
+                 RowBox[{
+                  RowBox[{"typeA", "\[Equal]", "\"\<p_z\>\""}], ",", 
+                  RowBox[{"proj", "[", 
+                   RowBox[{"[", "3", "]"}], "]"}], ",", "0"}], "]"}]}]}]}], 
+             "]"}]}], "]"}]}], "]"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"plist", ",", "typeB"}], "]"}], "&&", 
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"dlist", ",", "typeA"}], "]"}]}], ",", 
+       RowBox[{"para", "=", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"pos", "[", 
+            RowBox[{"plist", ",", "typeB"}], "]"}], "\[Equal]", 
+           RowBox[{"pos", "[", 
+            RowBox[{"dlist", ",", "typeA"}], "]"}]}], ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 SqrtBox["3"], "Vpd\[Sigma]"}], "-", 
+                RowBox[{"2", "Vpd\[Pi]"}]}], ")"}]}], "*", 
+             RowBox[{"comp", "[", 
+              RowBox[{"plist", ",", "typeB"}], "]"}], "*", 
+             RowBox[{"proj", "[", 
+              RowBox[{"[", "#1", "]"}], "]"}], "*", 
+             RowBox[{"proj", "[", 
+              RowBox[{"[", "#2", "]"}], "]"}]}], "&"}], "@@", 
+           RowBox[{"RotateLeft", "[", 
+            RowBox[{
+             RowBox[{"Range", "[", "3", "]"}], ",", 
+             RowBox[{"pos", "[", 
+              RowBox[{"dlist", ",", "typeA"}], "]"}]}], "]"}]}], ",", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"MemberQ", "[", 
+             RowBox[{
+              RowBox[{"dlist", "[", 
+               RowBox[{"[", 
+                RowBox[{";;", "3"}], "]"}], "]"}], ",", "typeA"}], "]"}], ",", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{
+                  SqrtBox["3"], "Vpd\[Sigma]", "*", 
+                  SuperscriptBox[
+                   RowBox[{"comp", "[", 
+                    RowBox[{"plist", ",", "typeB"}], "]"}], "2"], "*", 
+                  RowBox[{"proj", "[", 
+                   RowBox[{"[", "#", "]"}], "]"}]}], "+", 
+                 RowBox[{"Vpd\[Pi]", "*", 
+                  RowBox[{"proj", "[", 
+                   RowBox[{"[", "#", "]"}], "]"}], "*", 
+                  RowBox[{"(", 
+                   RowBox[{"1", "-", 
+                    RowBox[{"2", 
+                    SuperscriptBox[
+                    RowBox[{"comp", "[", 
+                    RowBox[{"plist", ",", "typeB"}], "]"}], "2"]}]}], 
+                   ")"}]}]}], ")"}]}], "&"}], "@", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"RotateRight", "[", 
+                   RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"#", ",", 
+                    RowBox[{
+                    RowBox[{"RotateLeft", "[", 
+                    RowBox[{
+                    RowBox[{"Range", "[", "3", "]"}], ",", 
+                    RowBox[{"#", "-", "1"}]}], "]"}], "[", 
+                    RowBox[{"[", "3", "]"}], "]"}], ",", 
+                    RowBox[{
+                    RowBox[{"RotateLeft", "[", 
+                    RowBox[{
+                    RowBox[{"Range", "[", "3", "]"}], ",", 
+                    RowBox[{"#", "-", "1"}]}], "]"}], "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], "}"}], ",", 
+                    RowBox[{"#", "-", "1"}]}], "]"}], "&"}], "@", 
+                 RowBox[{"pos", "[", 
+                  RowBox[{"plist", ",", "typeB"}], "]"}]}], ")"}], "[", 
+               RowBox[{"[", 
+                RowBox[{"pos", "[", 
+                 RowBox[{"dlist", ",", "typeA"}], "]"}], "]"}], "]"}], 
+              ")"}]}], ",", 
+            RowBox[{"Switch", "[", 
+             RowBox[{
+             "typeA", ",", 
+              "\"\<\!\(\*SuperscriptBox[\(d_x\), \
+\(2\)]\)-\!\(\*SuperscriptBox[\(y\), \(2\)]\)\>\"", ",", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", 
+                 FractionBox[
+                  SqrtBox["3"], "2"]}], "Vpd\[Sigma]", "*", 
+                RowBox[{"comp", "[", 
+                 RowBox[{"plist", ",", "typeB"}], "]"}], "*", 
+                RowBox[{"(", 
+                 RowBox[{
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "-", 
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}]}], "+", 
+               RowBox[{"Vpd\[Pi]", "*", 
+                RowBox[{"comp", "[", 
+                 RowBox[{"plist", ",", "typeB"}], "]"}], 
+                RowBox[{"(", 
+                 RowBox[{
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "-", 
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}]}], "-", 
+               RowBox[{"Vpd\[Pi]", "*", 
+                RowBox[{"Switch", "[", 
+                 RowBox[{"typeB", ",", "\"\<p_x\>\"", ",", 
+                  RowBox[{"proj", "[", 
+                   RowBox[{"[", "1", "]"}], "]"}], ",", "\"\<p_y\>\"", ",", 
+                  RowBox[{"-", 
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], ",", "\"\<p_z\>\"", ",",
+                   "0"}], "]"}]}]}], ",", 
+              "\"\<d_3\!\(\*SuperscriptBox[\(z\), \
+\(2\)]\)-\!\(\*SuperscriptBox[\(r\), \(2\)]\)\>\"", ",", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "Vpd\[Sigma]"}], "*", 
+                RowBox[{"comp", "[", 
+                 RowBox[{"plist", ",", "typeB"}], "]"}], 
+                RowBox[{"(", 
+                 RowBox[{
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "3", "]"}], "]"}], "2"], "-", 
+                  RowBox[{
+                   RowBox[{"(", 
+                    RowBox[{
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "+", 
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}], "/", 
+                   "2"}]}], ")"}]}], "+", 
+               RowBox[{
+                SqrtBox["3"], "Vpd\[Pi]", "*", 
+                RowBox[{"comp", "[", 
+                 RowBox[{"plist", ",", "typeB"}], "]"}], "*", 
+                SuperscriptBox[
+                 RowBox[{"proj", "[", 
+                  RowBox[{"[", "3", "]"}], "]"}], "2"]}], "-", 
+               RowBox[{
+                SqrtBox["3"], "Vpd\[Pi]", "*", 
+                RowBox[{"If", "[", 
+                 RowBox[{
+                  RowBox[{"typeB", "\[Equal]", "\"\<p_z\>\""}], ",", 
+                  RowBox[{"proj", "[", 
+                   RowBox[{"[", "3", "]"}], "]"}], ",", "0"}], "]"}]}]}]}], 
+             "]"}]}], "]"}]}], "]"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"dlist", ",", "typeA"}], "]"}], "&&", 
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"dlist", ",", "typeB"}], "]"}]}], ",", 
+       RowBox[{"para", "=", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"typeA", "\[Equal]", "typeB"}], ",", 
+          RowBox[{"Switch", "[", 
+           RowBox[{
+            RowBox[{"MemberQ", "[", 
+             RowBox[{
+              RowBox[{"dlist", "[", 
+               RowBox[{"[", 
+                RowBox[{";;", "3"}], "]"}], "]"}], ",", "typeA"}], "]"}], ",",
+             "True", ",", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"3", "Vdd\[Sigma]", "*", 
+                 SuperscriptBox[
+                  RowBox[{"proj", "[", 
+                   RowBox[{"[", "#1", "]"}], "]"}], "2"], "*", 
+                 SuperscriptBox[
+                  RowBox[{"proj", "[", 
+                   RowBox[{"[", "#2", "]"}], "]"}], "2"]}], "+", 
+                RowBox[{"Vdd\[Pi]", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#1", "]"}], "]"}], "2"], "+", 
+                   SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#2", "]"}], "]"}], "2"], "-", 
+                   RowBox[{"4", 
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#1", "]"}], "]"}], "2"], "*", 
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#2", "]"}], "]"}], "2"]}]}], ")"}]}], "+", 
+                RowBox[{"Vdd\[Delta]", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#3", "]"}], "]"}], "2"], "+", 
+                   RowBox[{
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#1", "]"}], "]"}], "2"], "*", 
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#2", "]"}], "]"}], "2"]}]}], ")"}]}]}], 
+               ")"}], "&"}], "@@", 
+             RowBox[{"RotateLeft", "[", 
+              RowBox[{
+               RowBox[{"Range", "[", "3", "]"}], ",", 
+               RowBox[{"pos", "[", 
+                RowBox[{"dlist", ",", "typeA"}], "]"}]}], "]"}]}], ",", 
+            "False", ",", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+              "typeA", "==", 
+               "\"\<\!\(\*SuperscriptBox[\(d_x\), \
+\(2\)]\)-\!\(\*SuperscriptBox[\(y\), \(2\)]\)\>\""}], ",", 
+              RowBox[{
+               RowBox[{
+                FractionBox["3", "4"], "Vdd\[Sigma]", 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "-", 
+                   SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}], "2"]}], 
+               "+", 
+               RowBox[{"Vdd\[Pi]", 
+                RowBox[{"(", 
+                 RowBox[{
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "+", 
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"], "-", 
+                  SuperscriptBox[
+                   RowBox[{"(", 
+                    RowBox[{
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "-", 
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}], "2"]}], 
+                 ")"}]}], "+", 
+               RowBox[{"Vdd\[Delta]", 
+                RowBox[{"(", 
+                 RowBox[{
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "3", "]"}], "]"}], "2"], "+", 
+                  RowBox[{
+                   SuperscriptBox[
+                    RowBox[{"(", 
+                    RowBox[{
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "+", 
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}], "2"], "/", 
+                   "4"}]}], ")"}]}]}], ",", 
+              RowBox[{
+               RowBox[{"Vdd\[Sigma]", 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "3", "]"}], "]"}], "2"], "-", 
+                   RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "+", 
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}], "/", 
+                    "2"}]}], ")"}], "2"]}], "+", 
+               RowBox[{"3", "Vdd\[Pi]", "*", 
+                SuperscriptBox[
+                 RowBox[{"proj", "[", 
+                  RowBox[{"[", "3", "]"}], "]"}], "2"], 
+                RowBox[{"(", 
+                 RowBox[{
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "+", 
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}]}], "+", 
+               RowBox[{
+                FractionBox["3", "4"], "Vdd\[Delta]", 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "+", 
+                   SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}], "2"]}]}]}],
+              "]"}]}], "]"}], ",", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"MemberQ", "[", 
+              RowBox[{
+               RowBox[{"dlist", "[", 
+                RowBox[{"[", 
+                 RowBox[{";;", "3"}], "]"}], "]"}], ",", "typeA"}], "]"}], "&&", 
+             RowBox[{"MemberQ", "[", 
+              RowBox[{
+               RowBox[{"dlist", "[", 
+                RowBox[{"[", 
+                 RowBox[{";;", "3"}], "]"}], "]"}], ",", "typeB"}], "]"}]}], 
+            ",", 
+            RowBox[{
+             RowBox[{"double", "=", 
+              RowBox[{"Ordering", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"SequenceCount", "[", 
+                   RowBox[{
+                    RowBox[{"Flatten", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"dlab", "[", "typeA", "]"}], ",", 
+                    RowBox[{"dlab", "[", "typeB", "]"}]}], "}"}], "]"}], ",", 
+                    RowBox[{"{", "#", "}"}]}], "]"}], "&"}], "/@", 
+                 RowBox[{"Range", "[", "3", "]"}]}], ",", 
+                RowBox[{"-", "1"}]}], "]"}]}], ";", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"3", "Vdd\[Sigma]", "*", 
+                  RowBox[{"proj", "[", 
+                   RowBox[{"[", "#1", "]"}], "]"}], "*", 
+                  RowBox[{"proj", "[", 
+                   RowBox[{"[", "#2", "]"}], "]"}], "*", 
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "#3", "]"}], "]"}], "2"]}], "+", 
+                 RowBox[{"Vdd\[Pi]", "*", 
+                  RowBox[{"proj", "[", 
+                   RowBox[{"[", "#1", "]"}], "]"}], "*", 
+                  RowBox[{"proj", "[", 
+                   RowBox[{"[", "#2", "]"}], "]"}], "*", 
+                  RowBox[{"(", 
+                   RowBox[{"1", "-", 
+                    RowBox[{"4", 
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#3", "]"}], "]"}], "2"]}]}], ")"}]}], "+", 
+                 RowBox[{"Vdd\[Delta]", "*", 
+                  RowBox[{"proj", "[", 
+                   RowBox[{"[", "#1", "]"}], "]"}], "*", 
+                  RowBox[{"proj", "[", 
+                   RowBox[{"[", "#2", "]"}], "]"}], 
+                  RowBox[{"(", 
+                   RowBox[{
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#3", "]"}], "]"}], "2"], "-", "1"}], 
+                   ")"}]}]}], ")"}], "&"}], "@@", 
+              RowBox[{"Flatten", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Complement", "[", 
+                  RowBox[{
+                   RowBox[{"Range", "[", "3", "]"}], ",", "double"}], "]"}], 
+                 ",", "double"}], "}"}], "]"}]}]}], ",", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"MemberQ", "[", 
+                RowBox[{
+                 RowBox[{"dlist", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"4", ";;"}], "]"}], "]"}], ",", "typeA"}], "]"}], "&&", 
+               RowBox[{"MemberQ", "[", 
+                RowBox[{
+                 RowBox[{"dlist", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"4", ";;"}], "]"}], "]"}], ",", "typeB"}], "]"}]}],
+               ",", 
+              RowBox[{
+               RowBox[{
+                SqrtBox["3"], "Vdd\[Sigma]", "*", 
+                RowBox[{"(", 
+                 RowBox[{
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "-", 
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}], 
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{
+                   SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "3", "]"}], "]"}], "2"], "-", 
+                   RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "+", 
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}], "/", 
+                    "2"}]}], ")"}], "/", "2"}]}], "+", 
+               RowBox[{
+                SqrtBox["3"], "Vdd\[Pi]", "*", 
+                SuperscriptBox[
+                 RowBox[{"proj", "[", 
+                  RowBox[{"[", "3", "]"}], "]"}], "2"], 
+                RowBox[{"(", 
+                 RowBox[{
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"], "-", 
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"]}], ")"}]}], "+", 
+               RowBox[{
+                SqrtBox["3"], "Vdd\[Delta]", 
+                RowBox[{"(", 
+                 RowBox[{"1", "+", 
+                  SuperscriptBox[
+                   RowBox[{"proj", "[", 
+                    RowBox[{"[", "3", "]"}], "]"}], "2"]}], ")"}], 
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{
+                   SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "-", 
+                   SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}], "/", 
+                 "4"}]}]}], ",", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"MemberQ", "[", 
+                 RowBox[{
+                  RowBox[{"dlist", "[", 
+                   RowBox[{"[", 
+                    RowBox[{";;", "3"}], "]"}], "]"}], ",", "typeA"}], "]"}], 
+                ",", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{
+                    FractionBox["3", "2"], "Vdd\[Sigma]", "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#1", "]"}], "]"}], "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#2", "]"}], "]"}], 
+                    RowBox[{"(", 
+                    RowBox[{
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "-", 
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}]}], "-", 
+                    RowBox[{"2", "Vdd\[Pi]", "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#1", "]"}], "]"}], "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#2", "]"}], "]"}], 
+                    RowBox[{"(", 
+                    RowBox[{
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "-", 
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}]}], "+", 
+                    RowBox[{"Vdd\[Pi]", "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#1", "]"}], "]"}], "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#2", "]"}], "]"}], "*", 
+                    RowBox[{"Switch", "[", 
+                    RowBox[{"typeA", ",", "\"\<d_yz\>\"", ",", 
+                    RowBox[{"-", "1"}], ",", "\"\<d_zx\>\"", ",", "1", ",", 
+                    "\"\<d_xy\>\"", ",", "0"}], "]"}]}], "+", 
+                    RowBox[{"Vdd\[Delta]", "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#1", "]"}], "]"}], "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#2", "]"}], "]"}], 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "-", 
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}], "/", 
+                    "2"}]}], "+", 
+                    RowBox[{"Vdd\[Delta]", "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#1", "]"}], "]"}], "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#2", "]"}], "]"}], "*", 
+                    RowBox[{"Switch", "[", 
+                    RowBox[{
+                    "typeA", ",", "\"\<d_yz\>\"", ",", "1", ",", 
+                    "\"\<d_zx\>\"", ",", 
+                    RowBox[{"-", "1"}], ",", "\"\<d_xy\>\"", ",", "0"}], 
+                    "]"}]}]}], ")"}], "&"}], "@@", 
+                 RowBox[{"dlab", "[", "typeA", "]"}]}], ",", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{
+                    FractionBox["3", "2"], "Vdd\[Sigma]", "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#1", "]"}], "]"}], "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#2", "]"}], "]"}], 
+                    RowBox[{"(", 
+                    RowBox[{
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "-", 
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}]}], "-", 
+                    RowBox[{"2", "Vdd\[Pi]", "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#1", "]"}], "]"}], "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#2", "]"}], "]"}], 
+                    RowBox[{"(", 
+                    RowBox[{
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "-", 
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}]}], "+", 
+                    RowBox[{"Vdd\[Pi]", "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#1", "]"}], "]"}], "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#2", "]"}], "]"}], "*", 
+                    RowBox[{"Switch", "[", 
+                    RowBox[{"typeB", ",", "\"\<d_yz\>\"", ",", 
+                    RowBox[{"-", "1"}], ",", "\"\<d_zx\>\"", ",", "1", ",", 
+                    "\"\<d_xy\>\"", ",", "0"}], "]"}]}], "+", 
+                    RowBox[{"Vdd\[Delta]", "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#1", "]"}], "]"}], "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#2", "]"}], "]"}], 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "2"], "-", 
+                    SuperscriptBox[
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "2"]}], ")"}], "/", 
+                    "2"}]}], "+", 
+                    RowBox[{"Vdd\[Delta]", "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#1", "]"}], "]"}], "*", 
+                    RowBox[{"proj", "[", 
+                    RowBox[{"[", "#2", "]"}], "]"}], "*", 
+                    RowBox[{"Switch", "[", 
+                    RowBox[{
+                    "typeB", ",", "\"\<d_yz\>\"", ",", "1", ",", 
+                    "\"\<d_zx\>\"", ",", 
+                    RowBox[{"-", "1"}], ",", "\"\<d_xy\>\"", ",", "0"}], 
+                    "]"}]}]}], ")"}], "&"}], "@@", 
+                 RowBox[{"dlab", "[", "typeB", "]"}]}]}], "]"}]}], "]"}]}], 
+           "]"}]}], "]"}]}]}], "]"}], ";", "\[IndentingNewLine]", "para"}]}], 
+   "\[IndentingNewLine]", "]"}]}]}], "Input",
+ CellChangeTimes->{{3.824263035407074*^9, 3.82426306621089*^9}, {
+   3.8242632967078137`*^9, 3.8242633404923177`*^9}, {3.824263407023881*^9, 
+   3.824263421256565*^9}, {3.8242634710597615`*^9, 3.824263580190872*^9}, {
+   3.8242636291968503`*^9, 3.824263744722412*^9}, {3.824263776348024*^9, 
+   3.8242637862468147`*^9}, {3.824263917996105*^9, 3.8242639673712854`*^9}, {
+   3.8242640296154957`*^9, 3.824264070872511*^9}, {3.824264104233341*^9, 
+   3.8242642868734665`*^9}, {3.8242644917572813`*^9, 3.824264630588107*^9}, {
+   3.8242646679992814`*^9, 3.824264687731533*^9}, {3.824264845788803*^9, 
+   3.824264848029484*^9}, {3.824264931291971*^9, 3.8242649393646555`*^9}, {
+   3.8242649999172573`*^9, 3.824265301277982*^9}, {3.8242654435311832`*^9, 
+   3.8242656137364817`*^9}, {3.8242656535127077`*^9, 
+   3.8242657709615097`*^9}, {3.8242658118151083`*^9, 
+   3.8242658371624327`*^9}, {3.8242659490312195`*^9, 
+   3.8242660060834002`*^9}, {3.8242660566345935`*^9, 3.824266115702938*^9}, {
+   3.824266175388797*^9, 3.8242662226189013`*^9}, {3.8242664081732206`*^9, 
+   3.8242665128948493`*^9}, {3.8242665633095927`*^9, 3.824266568616067*^9}, {
+   3.8242666014333076`*^9, 3.8242667456946735`*^9}, {3.824266793606865*^9, 
+   3.8242668073679814`*^9}, {3.8242670908817797`*^9, 
+   3.8242671514027224`*^9}, {3.8242672633076057`*^9, 3.824267264639717*^9}, {
+   3.82426744161594*^9, 3.8242674507343445`*^9}, {3.8242675592130136`*^9, 
+   3.8242676128004017`*^9}, {3.82426766293639*^9, 3.8242677063946776`*^9}, {
+   3.824267752981632*^9, 3.8242678605001726`*^9}, {3.824267896985278*^9, 
+   3.824267942548311*^9}, {3.8242679874358597`*^9, 3.824268078133649*^9}, {
+   3.8242681319117727`*^9, 3.8242681425060253`*^9}, {3.824268230464982*^9, 
+   3.8242683992329226`*^9}, {3.8242702454439373`*^9, 3.824270264561462*^9}, {
+   3.824270365484282*^9, 3.8242703900518885`*^9}, {3.824270575440814*^9, 
+   3.8242706456238766`*^9}, {3.824270679560291*^9, 3.8242706799643035`*^9}, 
+   3.8242707536029654`*^9, 3.824270830429737*^9, {3.8242708691570215`*^9, 
+   3.8242709838162518`*^9}, {3.8242710858893623`*^9, 3.824271231783497*^9}, {
+   3.824271270616355*^9, 3.8242713419808087`*^9}, {3.824271425272704*^9, 
+   3.824271530850976*^9}, {3.8242716217883987`*^9, 3.824272232879957*^9}, {
+   3.824275076394128*^9, 3.824275089167767*^9}, {3.8242967445174985`*^9, 
+   3.8242968297246647`*^9}, {3.824297004411479*^9, 3.8242971096790476`*^9}, {
+   3.8242971993442926`*^9, 3.824297210655014*^9}, {3.8242973426504602`*^9, 
+   3.8242973514778576`*^9}, {3.824297434007159*^9, 3.824297449350131*^9}, {
+   3.8242975197170525`*^9, 3.8242977651006403`*^9}, {3.824297797413437*^9, 
+   3.8242977979141235`*^9}, {3.824297852123158*^9, 3.824297852348527*^9}, {
+   3.8242978989050536`*^9, 3.824297999938822*^9}, {3.8242980571807394`*^9, 
+   3.8242982638471084`*^9}, {3.8242983885785017`*^9, 
+   3.8242983914433293`*^9}, {3.824298721049178*^9, 3.8242987368020525`*^9}, {
+   3.824298973034274*^9, 3.8242991369851227`*^9}, {3.824299193310501*^9, 
+   3.8242992166287603`*^9}, {3.824299362169589*^9, 3.8242993715155554`*^9}, {
+   3.824299529908492*^9, 3.824299559126359*^9}, {3.8242995955661964`*^9, 
+   3.8242996147335005`*^9}, {3.824299649940135*^9, 3.8242997094360914`*^9}, {
+   3.8242998152561035`*^9, 3.8242998429999094`*^9}, {3.8243009751782074`*^9, 
+   3.824301027201684*^9}, {3.8243010588191643`*^9, 3.824301236464529*^9}, {
+   3.824301536693679*^9, 3.824301591537058*^9}, {3.824301665214135*^9, 
+   3.824301666945505*^9}, {3.824301741692359*^9, 3.824301744482086*^9}, {
+   3.8243018520103064`*^9, 3.8243018808631163`*^9}, {3.8243019178392324`*^9, 
+   3.8243019246161423`*^9}, {3.8243020452413034`*^9, 3.824302127209215*^9}, {
+   3.8243021831287107`*^9, 3.8243021895774355`*^9}, {3.8243022656609693`*^9, 
+   3.824302371351329*^9}, {3.8243028705507593`*^9, 3.824303096000884*^9}, {
+   3.824303131198758*^9, 3.824303429118006*^9}, {3.824303531845869*^9, 
+   3.824303885930307*^9}, {3.8243039186039305`*^9, 3.8243039655269623`*^9}, {
+   3.824304033726606*^9, 3.824304034980265*^9}, {3.8243040912054434`*^9, 
+   3.824304136123329*^9}, {3.8250488388851213`*^9, 3.8250490365832157`*^9}, {
+   3.825049081101629*^9, 3.825049157980282*^9}, {3.8250491970624247`*^9, 
+   3.825049199556179*^9}, {3.8455902961497393`*^9, 3.845590367145416*^9}, {
+   3.8455904154692736`*^9, 3.845590491318301*^9}}]
+},
+WindowSize->{1920, 997},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+Magnification:>1.1 Inherited,
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (2016\:5e747\:670828\
+\:65e5)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 50994, 1198, 1791, "Input"]
+}
+]
+*)
+
